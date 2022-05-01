@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Ingrith.CoisaBoa.WebApp.Domain.Item>
+@{
+    ViewData["Title"] = "Cardápio";
+    
+}
+<h1>@ViewData["Title"]</h1>
+<hr/>
+<img src="~/imagens/Coisa boa -logo.jpg" title="Logo feita em WebApp Canva" alt="Logo Coisa Boa Restaurante" width=120 height=120 class="img-fluid" align="right">
+<h3>Olá, @ViewData["Cliente"]! Seja Bem-Vindo(a).</h3>
+<p>Teste de Cardápio</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantidadeDisponivel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ControlEstoque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CaminhoImagem)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantidadeDisponivel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ControlEstoque)
+            </td>
+            <td>
+                <img src="~/imagens/@item.CaminhoImagem" width=70 height=70>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+

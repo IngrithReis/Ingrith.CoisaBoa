@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using Ingrith.CoisaBoa.WebApp.Data;
 using Ingrith.CoisaBoa.WebApp.Domain;
 using Ingrith.CoisaBoa.WebApp.Domain.Enums;
+using System.Linq;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
     public class PedidoController : Controller
     {
-        [ViewData]
-        public int Quantidade { get; set; }
+        
 
         private readonly AppDbContext _context;
         private readonly UserManager<Usuario> _userManager;
@@ -61,35 +61,55 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         public async Task<ActionResult> AdicionarCarrinho(int id)
         {
             var item = await _context.Item.FirstOrDefaultAsync(i => i.Id == id);
-            
+            //verificar Estoque
+            var quantidade = item.QuantidadeDisponivel;
+            if(quantidade == 0)
+            {
+                return View("Esgotado");
+            }
             //diminuir de estoque
 
             item.DiminuirEstoque(1);
+            //verificar se há pedido e status
 
-            // adicionar ao carrinho
-            var pedido = new Pedido
+            var pedidoInput = await _context.Pedido.Include(x => x.Itens).FirstOrDefaultAsync(x => x.Usuario == User.Identity.Name && x.Status == PedidoStatusEnum.Novo);
+            //verificar se usuario já tem pedido novo aberto, se não, adicionar ao carrinho
+            if (pedidoInput == null)
             {
-                Usuario = User.Identity.Name,
-                Itens = new List<PedidoItem> 
-                                 { new PedidoItem
-                                               { ItemId =id,
-                                                 Quantidade = 1,
-                                                ValorTotal = item.Preco,
-                                                }
-                                  },
-               DataVenda = System.DateTime.Now,
-               Status = PedidoStatusEnum.Novo,
-               TotalPedido = item.Preco,
-            };
+                // criar o pedido
+                pedidoInput = new Pedido
+                {
+                    Usuario = User.Identity.Name,
+                    DataVenda = System.DateTime.Now,
+                    Status = PedidoStatusEnum.Novo,
+                    TotalPedido = item.Preco,
+                    Itens = new List<PedidoItem>()
+                };
+                // guardar no banco o pedido criado
+                _context.Pedido.Add(pedidoInput);
+            }
+            // tem pedido novo aberto, então, adicionar itens
+            var pedidoItem = pedidoInput.Itens.FirstOrDefault(x => x.Id == id);
 
+            if(pedidoItem == null)
+            {
+                pedidoInput.Itens.Add(new PedidoItem
+                {
+                    ItemId = id,
+                    Quantidade = 1,
+                    ValorTotal = item.Preco,
+                });
+            }
+            else
+            {
+                pedidoItem.Quantidade++;
+                pedidoItem.ValorTotal = item.Preco * pedidoItem.Quantidade;
+            }
 
-            // await _context.SaveChangesAsync();
+            pedidoInput.TotalPedido = pedidoInput.Itens.Sum(x => x.ValorTotal);
 
-            //incluir pedido
+            await _context.SaveChangesAsync();
 
-            
-
-            Quantidade = pedido.Itens.Count;
             return RedirectToAction("Index", "Cardapio");
         }
         // GET: PedidoController/Edit/5

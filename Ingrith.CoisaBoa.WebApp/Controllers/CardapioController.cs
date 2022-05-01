@@ -5,12 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Ingrith.CoisaBoa.WebApp.Data;
 using Ingrith.CoisaBoa.WebApp.Domain;
+using Ingrith.CoisaBoa.WebApp.Domain.Enums;
+using System.Linq;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
     public class CardapioController : Controller
     {
-        
+        [ViewData]
+        public int TotalItens { get; set; }
+
 
         private readonly AppDbContext _context;
         private readonly UserManager<Usuario> _userManager;
@@ -30,9 +34,12 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             var resultado = await _userManager.FindByNameAsync(User.Identity.Name);
          
             ViewData["Cliente"] = resultado.Nome;
-            
-           
-            
+
+            var pedidoInput = await _context.Pedido.Include(x => x.Itens).FirstOrDefaultAsync(x => x.Usuario == User.Identity.Name && x.Status == PedidoStatusEnum.Novo);
+
+            if (pedidoInput != null)
+                TotalItens = pedidoInput.Itens.Sum(x => x.Quantidade);
+
             return View(await testeDbContext.ToListAsync());
             
         }
@@ -69,21 +76,10 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         {   
            // encontrar o item selecionado
             var resultado = await _context.Item.FirstOrDefaultAsync(i => i.Id == id);
-            if(resultado == null)
-            {
-                //Quantidade =0;
-            }
-            // chamar método de pedido, pra guardar no pedido o que for selecionado
-            //criar controller de pedido
-            //ViewData["Quantidade"] = +1;
-            //resultado.DiminuirEstoque(1);
-            //if(resultado.QuantidadeDisponivel == 0)
-            //{
-            //    ViewData["Quantidade"] = "Esgotado";
-            //}
+           
 
             var resulutadoId = resultado.Id;
-            //Quantidade += Quantidade;
+            
             return RedirectToAction("AdicionarCarrinho","Pedido", new {id = resulutadoId});
         }
 

@@ -56,5 +56,22 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             return RedirectToAction("Index","Item");
 
         }
+        [HttpPost]
+        public async Task<IActionResult> Login(AdminLoginInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var admin = await _userManager.FindByEmailAsync(model.Email);
+            
+            if (!await _userManager.CheckPasswordAsync(admin, model.Password))
+            {
+                return View("Index",model);
+            }
+            //loga Usuário com a Role admin
+            await _signInManager.SignInAsync(admin, true);
+            return RedirectToAction("Index", "Item");
+        }
     }
 }

@@ -90,10 +90,38 @@ namespace Ingrith.CoisaBoa.WebApp
             using var scope = app.ApplicationServices.CreateScope();
 
             var roleManagger = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Usuario>>();
 
             var role = await roleManagger.FindByNameAsync("Admin");
+            var userAdmin = await userManager.FindByNameAsync("Administrador");
+
             if (role == null)
                 await roleManagger.CreateAsync(new IdentityRole("Admin"));
+
+            if (userAdmin == null) {
+                userAdmin = new Usuario
+                {
+                    Nome = "Laura",
+                    UserName = "Administrador",
+                    Email = "admin@coisaboa.com.br"
+                };
+               var createResult = await userManager.CreateAsync(userAdmin, "!Admin123");
+                if (createResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(userAdmin, "Admin");
+                }
+            }
+            else
+            {
+                if(!await userManager.IsInRoleAsync(userAdmin, "Admin"))
+                {
+                    await userManager.AddToRoleAsync(userAdmin, "Admin");
+                }
+
+            }
+               
+
+            
         }
     }
 }

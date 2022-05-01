@@ -5,23 +5,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ingrith.CoisaBoa.WebApp.Data;
 using Ingrith.CoisaBoa.WebApp.Domain;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
-    //[Authorize(Roles ="Admin")]
+    [Authorize(Roles ="Admin")]
     public class ItemController : Controller
     {
         private readonly AppDbContext _context;
-
-        public ItemController(AppDbContext context)
+        private readonly UserManager<Usuario> _userManager;
+        public ItemController(AppDbContext context, UserManager<Usuario> userMAnager)
         {
             _context = context;
+            _userManager = userMAnager;
         }
 
         // GET: Item
         public async Task<IActionResult> Index()
         {
             var testeDbContext = _context.Item.Include(i => i.Categoria);
+            var resultado = await _userManager.FindByNameAsync(User.Identity.Name);
+            ViewData["Administrador"] = resultado.Nome;
             return View(await testeDbContext.ToListAsync());
         }
 

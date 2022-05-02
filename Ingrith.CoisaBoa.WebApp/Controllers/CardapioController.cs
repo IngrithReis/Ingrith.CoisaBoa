@@ -7,6 +7,8 @@ using Ingrith.CoisaBoa.WebApp.Data;
 using Ingrith.CoisaBoa.WebApp.Domain;
 using Ingrith.CoisaBoa.WebApp.Domain.Enums;
 using System.Linq;
+using System.Collections.Generic;
+using Ingrith.CoisaBoa.WebApp.Models;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
@@ -14,6 +16,7 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
     {
         [ViewData]
         public int TotalItens { get; set; }
+       
 
 
         private readonly AppDbContext _context;
@@ -54,6 +57,15 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+        public async Task<ActionResult> VerCarrinho()
+        {
+            var pedidoInput = await _context.Pedido
+                .Include(x => x.Itens)
+                .ThenInclude(x => x.Item)
+                .FirstOrDefaultAsync(x => x.Usuario == User.Identity.Name && x.Status == PedidoStatusEnum.Novo);
+
+            return View("Carrinho", pedidoInput);
         }
 
         // POST: CardapioController/Create

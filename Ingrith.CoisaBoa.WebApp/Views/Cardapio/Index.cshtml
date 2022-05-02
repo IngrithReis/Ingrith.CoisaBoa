@@ -12,9 +12,9 @@
 
 <img src="~/imagens/Coisa boa -logo.jpg" title="Logo feita em WebApp Canva" alt="Logo Coisa Boa Restaurante" width=120 height=120 class="img-fluid" align="right">
 <h5 style="text-align:right">Bem-Vindo(a), @ViewData["Cliente"]!</h5>
-<h6> @ViewData["TotalItens"]</h6>
+<h6><img src="~/imagens/carrinho.png" style="width:70px;width:70px;"> @ViewData["TotalItens"]</h6>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="VerCarrinho" style="color:black;">Conferir Pedido</a> 
 </p>
 <table class="table">
     <thead>
@@ -45,7 +45,6 @@
             <td>
                  
                 <a asp-action="AdicionarQt" asp-route-id="@item.Id">Adicionar ao Carrinho</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

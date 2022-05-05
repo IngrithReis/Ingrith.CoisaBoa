@@ -25,7 +25,7 @@ namespace Ingrith.CoisaBoa.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");
 
             services.AddControllersWithViews();
 

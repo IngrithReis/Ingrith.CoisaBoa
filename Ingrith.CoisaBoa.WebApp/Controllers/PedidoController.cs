@@ -8,6 +8,8 @@ using Ingrith.CoisaBoa.WebApp.Data;
 using Ingrith.CoisaBoa.WebApp.Domain;
 using Ingrith.CoisaBoa.WebApp.Domain.Enums;
 using System.Linq;
+using System.Globalization;
+using System;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
@@ -59,7 +61,9 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> AdicionarCarrinho(int id)
-        {
+        {   //variável para alterar o formato DateTime do pedido
+            var dataCompra = DateTime.Now;
+
             var item = await _context.Item.FirstOrDefaultAsync(i => i.Id == id);
             //verificar Estoque
             var quantidade = item.QuantidadeDisponivel;
@@ -80,7 +84,7 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
                 pedidoInput = new Pedido
                 {
                     Usuario = User.Identity.Name,
-                    DataVenda = System.DateTime.Now,
+                    DataVenda = dataCompra,
                     Status = PedidoStatusEnum.Novo,
                     TotalPedido = item.Preco,
                     Itens = new List<PedidoItem>()

@@ -9,6 +9,8 @@ using Ingrith.CoisaBoa.WebApp.Domain.Enums;
 using System.Linq;
 using System.Collections.Generic;
 using Ingrith.CoisaBoa.WebApp.Models;
+using System.Globalization;
+using System.Threading;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
@@ -33,6 +35,8 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         
         public async Task<ActionResult> Index()
         {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("pt-BR");
+
             var testeDbContext = _context.Item.Include(i => i.Categoria);
             var resultado = await _userManager.FindByNameAsync(User.Identity.Name);
          
@@ -60,12 +64,16 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         }
         public async Task<ActionResult> VerCarrinho()
         {
+            
             var pedidoInput = await _context.Pedido
                 .Include(x => x.Itens)
                 .ThenInclude(x => x.Item)
                 .FirstOrDefaultAsync(x => x.Usuario == User.Identity.Name && x.Status == PedidoStatusEnum.Novo);
-
-            return View("Carrinho", pedidoInput);
+           
+            
+                return View("Carrinho", pedidoInput);
+            
+            
         }
 
         // POST: CardapioController/Create

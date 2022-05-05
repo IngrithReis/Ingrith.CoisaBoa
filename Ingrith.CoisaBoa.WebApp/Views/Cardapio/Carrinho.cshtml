@@ -3,42 +3,45 @@
 @{
     ViewData["Title"] = "Carrinho";
     
+
 }
 
 <h1>Carrinho</h1>
 
-<div>
-    <h4>Pedido</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataVenda)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataVenda)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalPedido)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalPedido)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Usuario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Usuario)
-        </dd>
-    </dl>
-</div>
-<table class="table">
-  <tbody> 
+@if (Model != null)
+{
+    <div>
+        <h4>Pedido</h4>
+        <hr />
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.DataVenda)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.DataVenda)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalPedido)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.TotalPedido)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Usuario)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Usuario)
+            </dd>
+        </dl>
+    </div>
+    <table class="table">
+        <tbody> 
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -48,27 +51,38 @@
                     <th></th>
                 </tr>
             </thead>
-            @foreach (var item in Model.Itens) {
-            <tr>
-                <td>
-                @Html.DisplayFor(model => item.Item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Item.Preco)
-            </td>
-            <td>
-                @Html.DisplayFor(model=> item.Quantidade)
-            </td>
-            <td>
-                @Html.DisplayFor(model=> item.ValorTotal)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
 
+            @foreach (var item in Model.Itens)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Item.Preco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model=> item.Quantidade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model=> item.ValorTotal)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+else
+{
+    <h4>Carrinho Vazio</h4>
+   
+}
+
+
+@Html.ActionLink("Retornar", "Index", "Cardapio", null, new { @class = "btn btn-primary", style="background-color:darkgreen"})

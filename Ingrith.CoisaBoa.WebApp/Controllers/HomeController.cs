@@ -65,12 +65,33 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             return RedirectToAction("Index", "Cardapio");
         }
 
-        
-        public IActionResult Registro()
+        [HttpGet]
+        public async Task<IActionResult> CadastrarEndereco()
         {   
-            return View();
-        }
+            //encontrar ususário
+            var usuario = await _userManager.FindByNameAsync(User.Identity.Name);
 
+            // verificar se há cadastro de enderço
+            if(usuario.Endereco == null)
+            {
+                return View("Registro");
+            }
+            return View("Registro");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Cadastrar(UsuarioInputRegisterModel model)
+        {
+            //encontrar ususário
+            var usuario = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            // Alterar informações de endereço 
+            usuario.Nome = model.Nome;
+            usuario.Endereco = model.Endereco;
+            usuario.Bairro = model.Bairro;
+            usuario.Complemento = model.Complemento;
+           
+            return View("Sucesso");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registro(UsuarioInputRegisterModel model)
@@ -126,10 +147,6 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         }
 
         
-        public IActionResult Sobre()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

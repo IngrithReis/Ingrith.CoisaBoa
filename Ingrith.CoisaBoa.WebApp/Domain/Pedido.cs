@@ -15,5 +15,16 @@ namespace Ingrith.CoisaBoa.WebApp.Domain
         public List<PedidoItem> Itens { get; set; }
         public PedidoStatusEnum Status { get; set; }
         public string Usuario { get; set; }
+
+        [Display(Name = "Observações do Pedido:")]
+        public string Observacao { get; set; }
+
+        public PagamentoEnum Pagamento { get; set; }
+
+        //taxa de entrega fixada para ser posteriormente tratada no desenvolver do projeto
+        public decimal TaxaEntrega { get; set; }
+
+        
+
     }
 }

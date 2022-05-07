@@ -4,14 +4,16 @@ using Ingrith.CoisaBoa.WebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Ingrith.CoisaBoa.WebApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220507001744_PagamentoEObservacaoPedido")]
+    partial class PagamentoEObservacaoPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,9 +105,6 @@ namespace Ingrith.CoisaBoa.WebApp.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("TaxaEntrega")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalPedido")
                         .HasColumnType("decimal(18,2)");

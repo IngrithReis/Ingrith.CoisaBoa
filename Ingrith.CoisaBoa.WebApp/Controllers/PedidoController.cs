@@ -10,6 +10,7 @@ using Ingrith.CoisaBoa.WebApp.Domain.Enums;
 using System.Linq;
 using System.Globalization;
 using System;
+using Ingrith.CoisaBoa.WebApp.Models;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
@@ -87,7 +88,10 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
                     DataVenda = dataCompra,
                     Status = PedidoStatusEnum.Novo,
                     TotalPedido = item.Preco,
-                    Itens = new List<PedidoItem>()
+                    Itens = new List<PedidoItem>(),
+                    TaxaEntrega = 7.0m,
+                    
+
                 };
                 // guardar no banco o pedido criado
                 _context.Pedido.Add(pedidoInput);
@@ -110,11 +114,40 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
                 pedidoItem.ValorTotal = item.Preco * pedidoItem.Quantidade;
             }
 
-            pedidoInput.TotalPedido = pedidoInput.Itens.Sum(x => x.ValorTotal);
-
+            
+            pedidoInput.TotalPedido = pedidoInput.Itens.Sum(x => x.ValorTotal) + pedidoInput.TaxaEntrega;
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Cardapio");
+        }
+        [HttpPost]
+        public async Task<ActionResult> FecharPedido(PedidoInputModel model)
+        {   //Procurar pedido 
+            
+            var pedido = await _context.Pedido.FirstOrDefaultAsync(p => p.Id == model.Id);
+            //Adicionar observacao e forma de pagamento e taxa de entrega
+
+            //Buscar os itens do pedido
+
+            //status de pedido deve ser alterdao
+
+            pedido.Status = PedidoStatusEnum.Preparando;
+            pedido.Observacao = model.Observacao;
+            pedido.Pagamento = model.Pagamento;
+
+            await _context.SaveChangesAsync();
+
+            // verificar se ususário já tem cadastro de endereço
+
+            var usuario = _context.Users.FirstOrDefault(u => u.UserName == pedido.Usuario);
+            if(usuario.Endereco == null)
+            {   
+                //redirect Action Regristar
+                return RedirectToAction("CadastrarEndereco","Home" );
+            }
+
+            return View("Sucesso");
+
         }
         // GET: PedidoController/Edit/5
         public ActionResult Edit(int id)

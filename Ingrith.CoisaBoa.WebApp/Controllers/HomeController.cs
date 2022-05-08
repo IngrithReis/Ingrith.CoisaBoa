@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Ingrith.CoisaBoa.WebApp.Domain;
 using Ingrith.CoisaBoa.WebApp.Models;
-
+using Ingrith.CoisaBoa.WebApp.Data;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
@@ -15,11 +17,13 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<Usuario> _signInManager;
-
+        private readonly AppDbContext _context;
         public HomeController(ILogger<HomeController> logger,
             UserManager<Usuario> userManager,
             RoleManager<IdentityRole> roleManager, 
-            SignInManager<Usuario> signInManager
+            SignInManager<Usuario> signInManager,
+            AppDbContext context
+
             
         )
         {
@@ -27,6 +31,7 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _context = context;
         }
         
         public string ReturnUrl { get; set; }
@@ -66,7 +71,7 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CadastrarEndereco()
+        public async Task<IActionResult> Cadastrarendereco()
         {   
             //encontrar ususário
             var usuario = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -89,8 +94,24 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             usuario.Endereco = model.Endereco;
             usuario.Bairro = model.Bairro;
             usuario.Complemento = model.Complemento;
+
+            ViewData["Nome"] = usuario.Nome;
+            ViewData["Bairro"] = usuario.Bairro;
+            ViewData["Endereco"] = usuario.Endereco;
+
+            // encontrar pedido do ususario
+
+            var pedido = await _context.Pedido.FirstOrDefaultAsync(p => p.Usuario == usuario.UserName);
            
-            return View("Sucesso");
+            ViewData["TotalPedido"] = pedido.TotalPedido;
+            ViewData["Pagamento"] = pedido.Pagamento;
+            ViewData["Obs"] = pedido.Observacao;
+            ViewData["Data"] = pedido.DataVenda;
+            
+
+
+
+            return View("Sucesso", pedido);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

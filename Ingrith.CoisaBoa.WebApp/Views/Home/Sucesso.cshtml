@@ -1,8 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Criação de usuário";
+﻿
+@{
+    ViewData["Title"] = "Pedido Feito";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Criação de Usuário</h1>
-    <p>Sucesso! <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <div>
+        <h3>Olá, @ViewData["Nome"]</h3>
+        <p>
+            <h5>O pedido está sendo encaminhado para o<strong> Bairro: </strong>@ViewData["Bairro"]</h5>
+            <h5><strong>Endreço: </strong> @ViewData["Endereco"]</h5>
+            <h5><strong>Valor do Pedido:</strong> @ViewData["TotalPedido"]</h5>
+            <h5><strong>Forma de Pagamento: </strong> @ViewData["Pagamento"]</h5>
+            <h5><strong>Observações: </strong> @ViewData["Obs"]</h5>
+            <h5><strong>Data: </strong> @ViewData["Data"]</h5>
+            <h5>Lembramos que o prazo de entrega estimado é de 40 minutos!</h5><br />
+            <h5><strong>Bom Apetite!</strong></h5>
+        </p>
+    </div>
 </div>

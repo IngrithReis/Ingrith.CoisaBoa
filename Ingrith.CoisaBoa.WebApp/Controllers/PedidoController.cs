@@ -127,7 +127,7 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             var pedido = await _context.Pedido.FirstOrDefaultAsync(p => p.Id == model.Id);
             //Adicionar observacao e forma de pagamento e taxa de entrega
 
-            //Buscar os itens do pedido
+            
 
             //status de pedido deve ser alterdao
 
@@ -143,7 +143,7 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             if(usuario.Endereco == null)
             {   
                 //redirect Action Regristar
-                return RedirectToAction("CadastrarEndereco","Home" );
+                return RedirectToAction("CadastrarEndereco","Home");
             }
 
             return View("Sucesso");

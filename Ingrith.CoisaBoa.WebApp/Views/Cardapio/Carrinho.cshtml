@@ -125,15 +125,15 @@
             </div>
             </div>
        
+<hr/>
 
  @Html.ActionLink("Adicionar Itens", "Index", "Cardapio", null, new { @class = "btn btn-primary", style="background-color:darkgreen"})
- @Html.ActionLink("Fechar Pedido", "FecharPedido", "Pedido", null, new { @class = "btn btn-primary", style="background-color:darkgreen"})
+ 
 }
 else
 {
     <h4>Carrinho Vazio</h4>
-   
+     @Html.ActionLink("Retornar", "Index", "Cardapio", null, new { @class = "btn btn-primary", style="background-color:darkgreen"})
 }
 
 
-@Html.ActionLink("Retornar", "Index", "Cardapio", null, new { @class = "btn btn-primary", style="background-color:darkgreen"})

@@ -94,9 +94,9 @@
     </table>
     <div align="center">
         <div class="row">
-            <div class='col-md-3'>
+            <div class='col'>
                  <form asp-controller="Pedido" asp-action="FecharPedido" method="post">
-                     @Html.HiddenFor(m => m.Id);
+                     @Html.HiddenFor(m => m.Id)
                    <div class="form-group">
                        
                        <span style="color: darkred">*Precisa de troco ou deseja retirar igredientes do seu pedido?</span>

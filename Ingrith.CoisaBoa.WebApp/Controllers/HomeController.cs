@@ -8,6 +8,8 @@ using Ingrith.CoisaBoa.WebApp.Models;
 using Ingrith.CoisaBoa.WebApp.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
@@ -79,6 +81,8 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             // verificar se há cadastro de enderço
             if(usuario.Endereco == null)
             {
+                var listaBairros = await _context.BairrosAtendidos.ToListAsync();
+                ViewBag.BairrosAtendidos = listaBairros.Select(x => new SelectListItem { Text = x.Nome });
                 return View("Registro");
             }
             return View("Registro");
@@ -138,31 +142,7 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
                 return Error();
             }
             await _signInManager.SignInAsync(user, false);
-            //var user = new Usuario
-            //{
-            //    Nome = "Teste2",
-            //    UserName = "11333383",
-            //    Bairro = "kkk",
-            //    Complemento = "fffff"
-
-            //};
-            //var resultado = await _userManager.CreateAsync(user,"Senha12345#");
-
-            //if (!resultado.Succeeded)
-            //{
-            //    return Error();
-            //}
-            //criando a role sem especificar para qual usuário ela se refere
-            //var role = new IdentityRole { Name = "Admin" };
-            //resultado = await _roleManager.CreateAsync(role);
-            //if (!resultado.Succeeded)
-            //{
-            //    return Error();
-            //}
-            // Atribuindo a Role a um usuário específico
-            //await _userManager.AddToRoleAsync(user, "Admin");
-
-            //await _signInManager.SignInAsync(user,true);
+            
 
             return RedirectToAction("Index","Cardapio");
         }

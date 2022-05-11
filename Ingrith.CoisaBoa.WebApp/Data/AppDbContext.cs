@@ -16,6 +16,8 @@ namespace Ingrith.CoisaBoa.WebApp.Data
         public DbSet<PedidoItem> PedidoItem { get; set; }
         public DbSet<PedidoStatus> PedidoStatus { get; set; }
 
+        public DbSet<BairrosAtendidos> BairrosAtendidos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<CategoriaItem>(modelBuilder =>
@@ -40,6 +42,32 @@ namespace Ingrith.CoisaBoa.WebApp.Data
                         QuantidadeDisponivel = 1000,
                         CaminhoImagem = "batata.jpg"
                     }
+                );
+            });
+
+            builder.Entity<BairrosAtendidos>(modelBuilder =>
+            {
+                modelBuilder.HasData(
+                    new BairrosAtendidos
+                    {
+                        Id = 1,
+                        Nome = "Vila Planalto",
+                    },
+                    new BairrosAtendidos
+                    {
+                        Id = 2,
+                        Nome = "Tangamandápio",
+                    },
+                    new BairrosAtendidos
+                    {
+                        Id = 3,
+                        Nome = "Gopoúva",
+                    },
+                     new BairrosAtendidos
+                     {
+                         Id = 4,
+                         Nome = "Vila Sésamo",
+                     }
                 );
             });
 

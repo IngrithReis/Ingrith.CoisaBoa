@@ -47,6 +47,7 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UsuarioLoginInputModel model)
         {
+            if (ModelState.IsValid) {
             var resultado = await _userManager.FindByNameAsync(model.Telefone);
             if(resultado == null)
             {
@@ -70,6 +71,9 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             ViewData["Cliente"] = resultado.Nome;
             await _signInManager.SignInAsync(resultado,false);
             return RedirectToAction("Index", "Cardapio");
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

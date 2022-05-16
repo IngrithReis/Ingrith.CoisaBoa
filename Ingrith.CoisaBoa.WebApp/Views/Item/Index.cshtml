@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Ingrith.CoisaBoa.WebApp.Domain.Item>
 
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -57,11 +58,13 @@
                 <img src="~/imagens/@item.CaminhoImagem" width=70 height=70>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+}   
     </tbody>
 </table>
+    @Html.ActionLink("Criar categoria", "Create", "CategoriaItem")<br />
+    @Html.ActionLink("Ver Pedidos", "ListarPedidos", "Pedido")

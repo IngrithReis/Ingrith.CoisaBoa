@@ -26,8 +26,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Listar Categorias</a>
 </div>
+@Html.ActionLink("Retornar para Itens", "Index", "Item")
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

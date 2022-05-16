@@ -1,0 +1,30 @@
+﻿@model Ingrith.CoisaBoa.WebApp.Domain.Pedido
+
+@{
+    ViewData["Title"] = "Itens a ser preparados";
+}
+
+<h1>Preparar:</h1>
+
+<div>
+    <h4>Itens do cliente: @ViewData["cliente"]</h4>
+    <hr />
+    <dl class="row">
+        
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Observacao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Observacao)
+        </dd>
+        
+        
+</div>
+@foreach(var item in Model.Itens)
+{
+     @Html.DisplayFor(model => item.Item.Nome)<br />
+     @Html.DisplayFor(model => item.Quantidade)<br />
+}
+<div>
+    <a asp-action="ListarPedidos"><strong>Retornar</strong></a>
+</div>

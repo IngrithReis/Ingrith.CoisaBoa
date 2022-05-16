@@ -121,6 +121,8 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
 
             return View("Sucesso", pedido);
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registro(UsuarioInputRegisterModel model)

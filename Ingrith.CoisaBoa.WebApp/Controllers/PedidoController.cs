@@ -11,6 +11,7 @@ using System.Linq;
 using System.Globalization;
 using System;
 using Ingrith.CoisaBoa.WebApp.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
@@ -176,7 +177,34 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         {
             return View();
         }
+        public async Task<ActionResult> ListarPedidos()
+        {
+            var pedidos = await _context.Pedido.Include(x => x.Itens).Where(x => x.Status == PedidoStatusEnum.Preparando).ToListAsync();
+            
+           
+            //ViewBag.BairrosAtendidos = listaBairros.Select(x => new SelectListItem { Text = x.Nome });
+            return View(pedidos);
+        }
 
+        public async Task<ActionResult> Detalhes(int id)
+        {
+            var pedido = await _context.Pedido.Include(x => x.Itens).ThenInclude(x => x.Item).FirstOrDefaultAsync(x => x.Id == id);
+            //var itens = await _context.PedidoItem.Include(p => p.ItemId).FirstOrDefaultAsync(u => u.)
+            var usuario = await _context.Users.FirstOrDefaultAsync(x => x.UserName == pedido.Usuario);
+            var nome = usuario.Nome;
+            ViewData["cliente"] = nome;
+            //ViewBag.BairrosAtendidos = listaBairros.Select(x => new SelectListItem { Text = x.Nome });
+            return View(pedido);
+        }
+        public async Task<ActionResult> AlteraStatus(int id)
+        {
+            var pedido = await _context.Pedido.FirstOrDefaultAsync(x => x.Id == id);
+            pedido.Status = PedidoStatusEnum.Entregue;
+            await _context.SaveChangesAsync();
+            var pedidos = await _context.Pedido.Include(x => x.Itens).Where(x => x.Status == PedidoStatusEnum.Preparando).ToListAsync();
+
+            return View("ListarPedidos", pedidos);
+        }
         // POST: PedidoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]

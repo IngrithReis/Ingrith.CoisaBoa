@@ -6,12 +6,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<h4>Olá, @ViewData["Administrador"]</h4>
+
+
+<h1>Olá, @ViewData["Administrador"]!</h1>
+<h4>Selecione a opção desejada: </h4>
+<hr />
+<div class=container>
+    <div class="row">
+        <div class="col">
+            @Html.ActionLink("Criar categoria", "Create", "CategoriaItem",  null, new { @class = "btn btn-primary", style="background-color:darkgreen"})<br />
+        </div>
+        <div class="col">
+            @Html.ActionLink("Criar Item", "Create", "Item", null, new { @class = "btn btn-primary", style="background-color:darkgreen"})
+        </div>
+        <div class="col">
+            @Html.ActionLink("Ver Pedidos", "ListarPedidos", "Pedido", null, new { @class = "btn btn-primary", style="background-color: darkgreen"})
+        </div>
+    </div>
+</div>
+<hr />
+<h3>Itens do seu cardápio:</h3>
 <table class="table">
     <thead>
         <tr>
@@ -37,34 +52,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Preco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuantidadeDisponivel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ControlEstoque)
-            </td>
-            <td>
-                <img src="~/imagens/@item.CaminhoImagem" width=70 height=70>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}   
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantidadeDisponivel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ControlEstoque)
+                </td>
+                <td>
+                    <img src="~/imagens/@item.CaminhoImagem" width=70 height=70>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
-    @Html.ActionLink("Criar categoria", "Create", "CategoriaItem")<br />
-    @Html.ActionLink("Ver Pedidos", "ListarPedidos", "Pedido")

@@ -5,63 +5,68 @@
 }
 
 <h1>View</h1>
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataVenda)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPedido)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Usuario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Observacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pagamento)
+                </th>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DataVenda)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPedido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Usuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Observacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pagamento)
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataVenda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPedido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Observacao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pagamento)
-            </td>
-            
-            <td>
-                <a asp-action="AlteraStatus" asp-route-id="@item.Id">Entregue</a> |
-                <a asp-action="Detalhes" asp-route-id="@item.Id">Ver Itens</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataVenda)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPedido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Usuario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Observacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pagamento)
+                    </td>
+
+                    <td>
+                        <a asp-action="AlteraStatus" asp-route-id="@item.Id">Preparado</a> 
+                        <a asp-action="Detalhes" asp-route-id="@item.Id">Ver Itens</a> 
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+else
+{
+    <h4>Você ainda não tem pedidos a preparar! </h4>
+     @Html.ActionLink("Retornar", "Index", "CategoriaItem", null, new { @class = "btn btn-primary", style="background-color:blue"})
+}

@@ -7,6 +7,7 @@ using Ingrith.CoisaBoa.WebApp.Data;
 using Ingrith.CoisaBoa.WebApp.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Ingrith.CoisaBoa.WebApp.Domain.Enums;
 
 namespace Ingrith.CoisaBoa.WebApp.Controllers
 {
@@ -159,6 +160,25 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         private bool ItemExists(int id)
         {
             return _context.Item.Any(e => e.Id == id);
+        }
+        public async Task<IActionResult> GraficoItens()
+        {
+            
+            var itens = await _context.PedidoItem
+                .Where(x => x.Pedido.Status == PedidoStatusEnum.Entregue)
+                .Include(x => x.Item)
+                .Include(x => x.Pedido)
+                .GroupBy(x => x.Item.Nome)
+                .Select(x => new
+                {
+                    Nome = x.Key,
+                    Quantidade = x.Sum(y => y.Quantidade)
+                }).ToListAsync();
+
+            ViewBag.Nomes = itens.Select(x => x.Nome).ToArray();
+            ViewBag.Valores = itens.Select(x => x.Quantidade).ToArray();
+
+            return View();
         }
     }
 }

@@ -42,6 +42,10 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
         {
             return View();
         }
+        public IActionResult Sobre()
+        {
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -4,8 +4,8 @@
     ViewData["Title"] = "View";
 }
 
-<h1>View</h1>
-@if (Model != null)
+<h1>Pedidos:</h1>
+@if (Model.Any())
 {
     <table class="table">
         <thead>
@@ -68,5 +68,6 @@
 else
 {
     <h4>Você ainda não tem pedidos a preparar! </h4>
-     @Html.ActionLink("Retornar", "Index", "CategoriaItem", null, new { @class = "btn btn-primary", style="background-color:blue"})
+    <hr />
+     @Html.ActionLink("Retornar", "Index", "Item", null, new { @class = "btn btn-primary", style="background-color:darkgreen"})
 }

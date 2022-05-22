@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Projeto Integrador 4° Semestre</h1>
-    <img src="https://raw.githubusercontent.com/IngrithReis/Ingrith.CoisaBoa/master/Ingrith.CoisaBoa.WebApp/wwwroot/imagens/senac__logo.jpg?token=GHSAT0AAAAAABU2VCTVIZ65RGKAWTJDCV22YUKVK5A"style="align-content:center" width="80" height="60" />
+    <img src="https://github.com/IngrithReis/Ingrith.CoisaBoa/blob/1793592e4a7d222caa9c7ab32d058026d864c701/Ingrith.CoisaBoa.WebApp/wwwroot/imagens/senac__logo.jpg" width="80" height="60" />
     <p><h4>
         Bem-vindo ao "Crie seu Link". Este Projeto foi elaborado para a obtenção de nota
         no Curso Análise e Desenvolvimento de Sistemas e simula a criação de um link enviado por mensagem.

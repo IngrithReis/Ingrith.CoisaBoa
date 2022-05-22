@@ -4,6 +4,7 @@
         <canvas id="grafico"></canvas>
     </div>
 </div>
+ @Html.ActionLink("Retornar", "Index", "Item", null, new { @class = "btn btn-primary", style="background-color:darkgreen"})
 @{
     var nomes = Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Nomes)) ;
     var valores = Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Valores));

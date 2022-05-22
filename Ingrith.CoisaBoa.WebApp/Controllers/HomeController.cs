@@ -107,6 +107,8 @@ namespace Ingrith.CoisaBoa.WebApp.Controllers
             usuario.Bairro = model.Bairro;
             usuario.Complemento = model.Complemento;
 
+            _context.SaveChanges();
+
             ViewData["Nome"] = usuario.Nome;
             ViewData["Bairro"] = usuario.Bairro;
             ViewData["Endereco"] = usuario.Endereco;

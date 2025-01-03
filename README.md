@@ -22,17 +22,11 @@
         O Front foi estilizado utilizando recursos de CSS com as Tags HTML, matérias ministradas na disciplina Web Standars.
     </h4></p>
     <p><h3>
-        Grupo 17:
+        
         <ul>
-            <li>Andreson da Cruz Silva</li>
-            <li>Cláudia Gomes Roberto</li>
-            <li> Douglas Gonçalves Bittencourt</li>
-            <li>Felipe Kalid</li>
-            <li>Guilherme Dalonso Castro</li>
+            
             <li>Ingrith Fernandes dos Reis</li>
-            <li>Nilson Ledres Pontes</li>
-            <li>Otávio dos Santos Simões</li>
-            <li>Wagner Simões Ghidini</li>
+            
   </ul>
         
        

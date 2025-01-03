@@ -21,13 +21,9 @@
     <p><h4>
         O Front foi estilizado utilizando recursos de CSS com as Tags HTML, matérias ministradas na disciplina Web Standars.
     </h4></p>
-    <p><h3>
+    <p> Aluna: Ingrith Reis </p>
         
-        <ul>
-            
-            <li>Ingrith Fernandes dos Reis</li>
-            
-  </ul>
+       
         
        
 </body>
